@@ -1,12 +1,12 @@
-# 한발 먼저 가본 문과생이 알려주는, 데이터 시각화 - 아무것도 모르고 react 시작하기
+# 한발 먼저 가본 문과생이 알려주는, 데이터 시각화 - API data를 chart로 표현하자!
 
 
 
-이 Repository는 '한발 먼저 가본 문과생이 알려주는, 데이터 시각화 - 아무것도 모르고 react 시작하기'의 예제 파일입니다. https://github.com/rafrex/spa-github-pages 을 많이 변경하지 않고 아티클만큼 구현된 repository입니다.
+이 Repository는 '한발 먼저 가본 문과생이 알려주는, 데이터 시각화 - API data를 chart로 표현하자!'의 구현 파일입니다. https://github.com/rafrex/spa-github-pages 을 많이 변경하지 않고 article만큼 구현된 repository입니다.
  이 코드들과 자신의 코드를 비교해봐도 좋고 clone하여 수정해봐도 좋은 방법입니다.
 
 #### Clone하여 사용하기
-1. Clone하기 ($ git clone https://github.com/oneybee/reactapp.git)
+1. Clone하기 ($ git clone https://github.com/oneybee/datavisual-api_chart.git)
 
 2. 자신의 repository로 바꿔주기
   
@@ -28,12 +28,12 @@
     텍스트 에디터를 이용해 /Src/index.js로 이동
    
     ReactDOM.render(
-    <BrowserRouter basename="/reactapp">
+    <BrowserRouter basename="/datavisual-api_chart">
 
-    "/reactapp" => "/repository 이름"  으로 변경해주기
+    "/datavisual-api_chart" => "/repository 이름"  으로 변경해주기
 
 4. index.html에서 
-    <script src="/reactapp/build/bundle.js"></script> 부분을
+    <script src="/datavisual-api_chart/build/bundle.js"></script> 부분을
     "/build/bundle/js" => "/repositoryname/build/bundle.js" 로 변경해주기
 
 5. $ npm instal

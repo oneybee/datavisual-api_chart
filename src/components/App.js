@@ -13,10 +13,10 @@ export default function App() {
       <h1 style={s.title}>Hello</h1>
       <Interactive
         as="a"
-        href="https://github.com/oneybee/reactapp"
+        href="https://github.com/oneybee/datavisual-api_chart"
         style={s.repoLink}
         {...s.link}
-      >https://github.com/oneybee/reactapp</Interactive>
+      >https://github.com/oneybee/datavisual-api_chart</Interactive>
 
       <nav style={s.breadcrumbs}>
         <Breadcrumbs />
