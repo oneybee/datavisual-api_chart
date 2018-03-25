@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 
 ReactDOM.render(
-  <BrowserRouter basename="/reactapp">
+  <BrowserRouter basename="/datavisual-api_chart">
     <App />
   </BrowserRouter>,
   document.getElementById('root'),
