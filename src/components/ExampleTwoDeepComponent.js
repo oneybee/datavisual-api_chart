@@ -1,80 +1,76 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Interactive from 'react-interactive';
 import { Link } from 'react-router-dom';
 import { Li } from '../styles/style';
 import s from '../styles/exampleTwoDeepComponent.style';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'Recharts';
 
-const propTypes = {
-  location: PropTypes.object.isRequired,
-};
 
-export default function ExampleTwoDeepComponent({ location }) {
-  const queryPresent = location.search !== '';
-  const hashPresent = location.hash !== '';
-
-  function queryStringTitle() {
-    if (queryPresent) return 'The query string field-value pairs are:';
-    return 'No query string in the url';
-  }
-
-  function hashFragmentTitle() {
-    if (hashPresent) return 'The hash fragment is:';
-    return 'No hash fragment in the url';
-  }
-
-  function linkToShowQueryAndOrHash() {
-    if (queryPresent && hashPresent) return null;
-
-    const queryString = (queryPresent ? location.search : '?field1=foo&field2=bar');
-    const hashFragment = (hashPresent ? location.hash : '#boom!');
-
-    let linkText = '';
-    if (queryPresent && !hashPresent) linkText = 'Show with hash fragment';
-    if (!queryPresent && hashPresent) linkText = 'Show with query string';
-    if (!queryPresent && !hashPresent) linkText = 'Show with query string and hash fragment';
-
-    return (
-      <div style={s.lineContainer}>
-        <Interactive
-          as={Link}
-          to={`/example/two-deep${queryString}${hashFragment}`}
-          {...s.link}
-        >{linkText}</Interactive>
-      </div>
-    );
-  }
-
-  function parseQueryString() {
-    if (!queryPresent) return [];
-    return location.search
-      .replace('?', '')
-      .split('&')
-      .map(fvPair => fvPair.split('='))
-      .map(pair => [pair[0], pair.slice(1).join('=')]);
-  }
-
-  return (
-    <div>
-      <div style={s.lineContainer}>
-        <div>{queryStringTitle()}</div>
-        <ul>
-          {
-            parseQueryString().map((pair, index) => (
-              <Li key={`${pair[0]}${pair[1]}${index}`}>{`${pair[0]}: ${pair[1]}`}</Li>
-            ))
-          }
-        </ul>
-      </div>
-      <div style={s.lineContainer}>
-        <div>{hashFragmentTitle()}</div>
-        <ul>
-          {hashPresent && <Li>{location.hash.slice(1)}</Li>}
-        </ul>
-      </div>
-      {linkToShowQueryAndOrHash()}
-    </div>
-  );
+var obj = {  
+  method: 'GET',
+  headers: {
+    'X-Auth-Token': 'e600784123014d489c796ab72ed9587d'
+  },
 }
 
-ExampleTwoDeepComponent.propTypes = propTypes;
+class ExampleTwoDeepComponent extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      data: [],
+      loaded: false,
+    }
+  }
+  componentDidMount() {
+    return fetch('http://api.football-data.org/v1/competitions/394/leagueTable',obj)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          data: [
+            {name: 'Bayern', goalsAgainst: responseJson.standing[0].goalsAgainst, goals: responseJson.standing[0].goals, amt: 2400},
+            {name: 'Dortmund', goalsAgainst: responseJson.standing[1].goalsAgainst, goals: responseJson.standing[1].goals, amt: 2210},
+            {name: 'Leverkusen', goalsAgainst: responseJson.standing[2].goalsAgainst, goals: responseJson.standing[2].goals, amt: 2290},
+            {name: 'Gladbach', goalsAgainst: responseJson.standing[3].goalsAgainst, goals: responseJson.standing[3].goals, amt: 2000},
+            {name: 'Schalke 04', goalsAgainst: responseJson.standing[4].goalsAgainst, goals: responseJson.standing[4].goals, amt: 2181},
+            {name: 'Mainz', goalsAgainst: responseJson.standing[5].goalsAgainst, goals: responseJson.standing[5].goals, amt: 2500},
+            {name: 'Hertha', goalsAgainst: responseJson.standing[6].goalsAgainst, goals: responseJson.standing[6].goals, amt: 2100},
+              ]
+          })
+        this.setState({loaded: true});
+        console.log(this.state.data)
+      })
+    }
+  render() {
+    if (this.state.loaded == false)
+      return (<h1>loading..</h1>)
+    else
+    return (
+      <div>
+        <LineChart width={900} height={300} data={this.state.data} margin={{right: 200}}>
+         <XAxis dataKey="name"  />
+         <YAxis/>
+         <CartesianGrid strokeDasharray="3 3"/>
+         <Tooltip/>
+         <Legend />
+         <Line type="monotone" dataKey="goals" stroke="#8884d8" activeDot={{r: 8}}/>
+         <Line type="monotone" dataKey="goalsAgainst" stroke="#82ca9d" />
+        </LineChart>
+        {
+          this.state.data.map( (dynamicData,key)=>
+          <div key={key}>
+          {console.log('dynamicData', dynamicData)}
+            </div>
+          )
+        }      
+        <h4> 2015-2016 시즌 분데스리가 상위 7팀 득점(goals), 실점(goalsAgainst) </h4>
+      </div>
+
+
+
+    )
+  }
+}
+
+export default ExampleTwoDeepComponent;
